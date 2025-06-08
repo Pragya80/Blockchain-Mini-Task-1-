@@ -1,0 +1,54 @@
+import hashlib #Python's library for safe hashing (Here we're using SHA-256).
+import time #Enables us to record the current time, which we use after as block's timestamp.
+
+class Block:  #It is a kind of blueprint for building blocks in a blockchain.
+    def __init__(self, index, data, previous_hash):  #__init__ is a constructor, and takes input
+        self.index = index  #It tells the position of block in chain
+        self.timestamp = time.time()  #stores the time of block when it was created
+        self.data = data  #stores the data of the block
+        self.previous_hash = previous_hash  #It connects block to the previous one
+        self.nonce = 0  #We are not mining here so nonce is initialized as 0
+        self.hash = self.calculate_hash()  #calculates the block's hash
+
+    def calculate_hash(self): #This function uses SHA-256 to return the block's hash.
+        block_string = f"{self.index}{self.timestamp}{self.data}{self.previous_hash}{self.nonce}"  #creates a single string that contains all the information
+        return hashlib.sha256(block_string.encode()).hexdigest()  #hashlib.sha256()	Creates a SHA-256 hash object and .hexdigest()	Converts the binary hash to a readable hex string. The integrity is maintained through this.
+
+
+    def __str__(self):
+        return (
+            f"Block {self.index}:\n"
+            f"Index          : {self.index}\n"
+            f"Timestamp      : {self.timestamp}\n"
+            f"Data           : {self.data}\n"
+            f"Previous Hash  : {self.previous_hash}\n"
+            f"Hash           : {self.hash}\n"
+            f"Nonce          : {self.nonce}\n"
+            f"{'-'*40}"  #This is the format of the output that all block shows
+        )
+
+# Create the Genesis(1st or starting) block
+block1 = Block(1, "First Block", "0")
+
+# Create 2nd block
+block2 = Block(2, "Second Block", block1.hash)
+
+# Create 3rd block
+block3 = Block(3, "Third Block", block2.hash)
+
+# Prints all block
+for block in [block1, block2, block3]:
+    print(block)
+
+# Tamper with block 1
+print("\nTampering Block 1 data...\n")
+block2.data = "Tampered Data"  #changes in block 2
+block2.hash = block2.calculate_hash()  #Recalculate hash
+
+# Reprint blocks (You observe that block 2 data has changed but block 3 still hold the previous data of block 2)
+for block in [block1, block2, block3]:
+    print(f"Block {block.index}:\n"
+          f"Index: {block.index}\n"
+          f"Hash: {block.hash}\n"
+          f"Previous Hash: {block.previous_hash}\n"
+          f"Nonce: {block.nonce}\n")  
