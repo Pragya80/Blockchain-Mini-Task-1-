@@ -1,0 +1,36 @@
+import random #Used to simulate PoS, It generate random numbers
+
+miner = {"id": "Miner1", "power": random.randint(50, 100)}  #A random mining power from 50 to 100 is assigned to Miner1, a simulated participant in Proof of Work (PoW).
+staker = {"id": "Staker1", "stake": random.randint(50, 100)}  #A fictitious participant in Proof of Stake (PoS), Staker1 receives a random stake (the quantity of coin they have locked) from 50 to 100.
+voters = {
+#Vote for delegates done by people
+    "Siya": "Delegate1",
+    "Aditi": "Delegate2",
+    "Sukriti": "Delegate1"
+}
+
+# PoW (More power = more chances to win)
+pow_winner = miner["id"] if miner["power"] >= 75 else "Another miner" #Miner 1 win if it has more power
+print(f"\n[PoW] Winner: {pow_winner} (Power: {miner['power']})")
+
+# PoS (More stake = more chances to win)
+pos_winner = staker["id"] if staker["stake"] >= 75 else "Another staker" #Staker1 are chosen if they have more coins
+print(f"[PoS] Winner: {pos_winner} (Stake: {staker['stake']})")
+
+# DPoS
+#It calculates votes for each
+vote_counts = {}
+for voter in voters:
+    voted_delegate = voters[voter]
+    vote_counts[voted_delegate] = vote_counts.get(voted_delegate, 0) + 1
+dpos_winner = max(vote_counts, key=vote_counts.get)  #Find delegate which contain maximum votes
+print(f"[DPoS] Winner: {dpos_winner} (Votes: {vote_counts[dpos_winner]})")
+
+
+OUTPUT:
+PS C:\Users\DELL\blockchain-python\Blockchain_Task> python consensus_demo.py    
+
+[PoW] Winner: Miner1 (Power: 78)
+[PoS] Winner: Another staker (Stake: 54)
+[DPoS] Winner: Delegate1 (Votes: 2)
+
