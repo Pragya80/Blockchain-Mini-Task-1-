@@ -1,0 +1,32 @@
+import hashlib  #used for creating hash
+import time  #Get current time
+
+class POWBlock:  #create a block with POW
+    def __init__(self, data):
+        self.data = data  #stores the data of the block
+        self.nonce = 0  #A nonce starts at 0 and incrementally increases by 1 with each transaction sent. Nonce value changed when correct hash found
+        self.timestamp = time.time()  #stores the time of block when it was created
+        self.hash = ""  #holds the final hash after mining
+    
+    def mine_block(self, difficulty):  #mine the block using POW
+        start_time = time.time()  #save the start timing of mining process
+        target = "0" * difficulty  
+        while True:  #It is the infinte loop it only break when valid hash found
+            self.hash = hashlib.sha256(f"{self.timestamp}{self.data}{self.nonce}".encode()).hexdigest()  #create a hash using the data mentioned like timestamp, data and nonce
+            if self.hash.startswith(target):  #checks the hash
+                break  #If hash is started with correct number of zeroes then loop breaks
+            self.nonce += 1  #If hash is not started with correct number of zeroes then try the next nonce
+        end_time = time.time()  #end time of mining when it finished
+        print(f"Block mined: {self.hash}")  #prints the final hash
+        print(f"Nonce: {self.nonce}, Time: {end_time - start_time:.4f} seconds")  #print the tries and timing
+
+# Run simulation
+block = POWBlock("Test Mining Data")
+block.mine_block(difficulty=4)  #difficulty=4 then hash start with "0000"
+
+
+OUTPUT:
+
+PS C:\Users\DELL\blockchain-python\Blockchain_Task> python mining_simulation.py
+Block mined: 0000be75fe602f61fd6367ea7d829323046a0ebe71443af0bcfeb8c3a4b00636
+Nonce: 40336, Time: 0.0763 seconds
