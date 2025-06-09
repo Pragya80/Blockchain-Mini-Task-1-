@@ -11,20 +11,20 @@ II. Charity Donation-> In many fundraisers, we never really know where the money
 
 2.)BLOCK ANATOMY
 
-┌───────────────────────────────────────────────┐
-│                 BLOCK                         │
-├───────────────────────────────────────────────┤
-│ Timestamp      : 2025-06-09 02:35:00          │
-│ Nonce          : 45219                        │
-│ Previous Hash  : 0000abc1...45fe              │
-│ Merkle Root    : 8e9c4f...d7a1                │
-├───────────────────────────────────────────────┤
-│                 DONATION DATA                 │
-│  - TX1: Riya donated ₹100 to “FoodForAll”     │
-│  - TX2: Aman donated ₹250 to “CleanWaterNow”  │
-│  - TX3: Zoya donated ₹500 to “TreeMission”    │
-│  - TX4: Ravi donated ₹150 to “EduFund India”  │
-└───────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                         BLOCK                              │
+├────────────────────────────────────────────────────────────┤
+│ Timestamp    : 2025-06-09 02:35:00                          │
+│ Nonce        : 45219                                       │
+│ Previous Hash: 0000abc1...45fe                             │
+│ Merkle Root  : 8e9c4f...d7a1                               │
+├────────────────────────────────────────────────────────────┤
+│                       DONATION DATA                        │
+│ TX1: Riya donated ₹100 to “FoodForAll”                     │
+│ TX2: Aman donated ₹250 to “CleanWaterNow”                 │
+│ TX3: Zoya donated ₹500 to “TreeMission”                   │
+│ TX4: Ravi donated ₹150 to “EduFund India”                 │
+└────────────────────────────────────────────────────────────┘
 
 The Merkle root uses hash functions to compile a block's transactions, acting as a last seal or fingerprint. It assists in confirming that the information within hasn't been altered or tampered with.
 
